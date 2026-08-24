@@ -302,12 +302,9 @@ element.remove();
 
 /* هر لمس = یک عدد */
 
-coin.addEventListener("pointerdown", function(event) {
-  event.preventDefault();
+coin.addEventListener("touchstart", function(event) {
 
-  if (event.pointerType === "touch" && event.isPrimary === false) {
-    return;
-  }
+  event.preventDefault();
 
   if (energy <= 0) {
     return;
@@ -318,11 +315,14 @@ coin.addEventListener("pointerdown", function(event) {
 
   updateScreen();
 
+  const touch = event.touches[0];
+
   createFloatingText(
-    event.clientX,
-    event.clientY
+    touch.clientX,
+    touch.clientY
   );
-});
+
+}, { passive: false });
 
 balance=balance+1;
 energy=energy-1;
