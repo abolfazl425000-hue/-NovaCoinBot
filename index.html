@@ -249,11 +249,8 @@ opacity:0;
 
 let balance=Number(localStorage.getItem("nova_balance"))||0;
 
-let energy=Number(localStorage.getItem("nova_energy"));
+let energy = 1000;
 
-if(!Number.isFinite(energy)){
-energy=1000;
-}
 
 const MAX_ENERGY=1000;
 
