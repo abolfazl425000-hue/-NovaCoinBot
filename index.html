@@ -3,320 +3,520 @@
 
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-<title>Nova</title>
+<title>NovaCoin</title>
 
 <style>
-*{
-box-sizing:border-box;
--webkit-tap-highlight-color:transparent;
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
-body{
-margin:0;
-min-height:100vh;
-background:radial-gradient(circle at 50% 35%,#202a55,#0b1024 45%,#050711);
-color:white;
-font-family:Arial,sans-serif;
-overflow:hidden;
-user-select:none;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
 }
 
-.app{
-min-height:100vh;
-display:flex;
-flex-direction:column;
-align-items:center;
-padding:28px 18px 100px;
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 50% 30%, #202a55 0%, #0b1024 48%, #050711 100%);
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  user-select: none;
 }
 
-.logo{
-font-size:28px;
-font-weight:900;
-letter-spacing:4px;
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 105px;
 }
 
-.subtitle{
-margin-top:5px;
-font-size:12px;
-opacity:.55;
+.logo {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 4px;
 }
 
-.balance{
-margin-top:18px;
-font-size:38px;
-font-weight:900;
+.subtitle {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #ffd43b;
+  opacity: .9;
 }
 
-.unit{
-font-size:13px;
-opacity:.55;
-margin-top:3px;
+.balance {
+  margin-top: 16px;
+  font-size: 38px;
+  font-weight: 900;
 }
 
-.coin-area{
-flex:1;
-width:100%;
-display:flex;
-align-items:center;
-justify-content:center;
-position:relative;
+.unit {
+  font-size: 13px;
+  opacity: .55;
+  margin-top: 2px;
 }
 
-.coin{
-width:220px;
-height:220px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-background:radial-gradient(circle at 35% 25%,#fff8b0,#ffd83d 12%,#ffb300 45%,#c86b00);
-border:7px solid #ffd94d;
-box-shadow:0 0 25px rgba(255,190,30,.35),
-0 0 70px rgba(255,180,20,.18),
-inset 0 8px 15px rgba(255,255,255,.55),
-inset 0 -15px 20px rgba(100,40,0,.35);
-touch-action:none;
-transition:transform .06s;
+.coin-area {
+  flex: 1;
+  width: 100%;
+  min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-.coin:active{
-transform:scale(.90);
+.coin {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at 35% 25%,
+      #fff8b0 0%,
+      #ffd83d 12%,
+      #ffb300 45%,
+      #c86b00 100%
+    );
+
+  border: 7px solid #ffd94d;
+
+  box-shadow:
+    0 0 25px rgba(255,190,30,.35),
+    0 0 70px rgba(255,180,20,.18),
+    inset 0 8px 15px rgba(255,255,255,.55),
+    inset 0 -15px 20px rgba(100,40,0,.35);
+
+  touch-action: none;
+  cursor: pointer;
+
+  transition: transform .06s;
 }
 
-.coin-inner{
-width:165px;
-height:165px;
-border-radius:50%;
-border:4px solid rgba(255,255,255,.35);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:76px;
-font-weight:900;
+.coin:active {
+  transform: scale(.90);
 }
 
-.tap-text{
-position:absolute;
-bottom:20px;
-font-size:13px;
-opacity:.55;
+.coin-inner {
+  width: 165px;
+  height: 165px;
+  border-radius: 50%;
+
+  border: 4px solid rgba(255,255,255,.35);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 76px;
+  font-weight: 900;
+
+  color: white;
+  text-shadow: 0 4px 8px rgba(0,0,0,.35);
 }
 
-.energy{
-width:100%;
-max-width:390px;
-margin-bottom:18px;
+.tap-text {
+  position: absolute;
+  bottom: 25px;
+  font-size: 13px;
+  opacity: .55;
 }
 
-.energy-top{
-display:flex;
-justify-content:space-between;
-font-size:13px;
-margin-bottom:7px;
-opacity:.85;
+.energy {
+  width: 100%;
+  max-width: 390px;
+  margin-bottom: 16px;
 }
 
-.energy-bar{
-width:100%;
-height:9px;
-background:rgba(255,255,255,.1);
-border-radius:20px;
-overflow:hidden;
+.energy-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 7px;
+  opacity: .85;
 }
 
-.energy-fill{
-height:100%;
-width:100%;
-background:#ffd43b;
-border-radius:20px;
+.energy-bar {
+  width: 100%;
+  height: 9px;
+  background: rgba(255,255,255,.10);
+  border-radius: 20px;
+  overflow: hidden;
 }
 
-.nav{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-height:78px;
-display:flex;
-justify-content:space-around;
-align-items:center;
-background:rgba(7,10,22,.94);
-border-top:1px solid rgba(255,255,255,.08);
-backdrop-filter:blur(12px);
+.energy-fill {
+  height: 100%;
+  width: 100%;
+  background: #ffd43b;
+  border-radius: 20px;
+  transition: width .2s;
 }
 
-.nav-item{
-border:0;
-background:transparent;
-color:white;
-opacity:.65;
-font-size:11px;
+.nova-info {
+  width: 100%;
+  max-width: 390px;
+
+  margin: 5px auto 18px;
+  padding: 16px;
+
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.08);
+
+  border-radius: 18px;
+
+  text-align: right;
+
+  font-size: 12px;
+  line-height: 1.8;
+
+  color: rgba(255,255,255,.82);
 }
 
-.nav-icon{
-display:block;
-font-size:22px;
-margin-bottom:4px;
+.nova-info h3 {
+  margin: 0 0 8px;
+
+  color: #ffd43b;
+
+  font-size: 15px;
 }
 
-.floating{
-position:fixed;
-pointer-events:none;
-color:#ffd43b;
-font-size:27px;
-font-weight:900;
-animation:floatUp .7s ease-out forwards;
+.nova-info p {
+  margin: 5px 0;
 }
 
-@keyframes floatUp{
-0%{
-transform:translateY(0) scale(1);
-opacity:1;
+.nova-info strong {
+  display: block;
+
+  margin-top: 8px;
+
+  color: #ffd43b;
+
+  font-size: 13px;
 }
-100%{
-transform:translateY(-90px) scale(1.2);
-opacity:0;
+
+.nav {
+  position: fixed;
+
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  height: 78px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  background: rgba(7,10,22,.95);
+
+  border-top: 1px solid rgba(255,255,255,.08);
+
+  backdrop-filter: blur(12px);
+
+  z-index: 10;
 }
+
+.nav-item {
+  border: 0;
+  background: transparent;
+
+  color: white;
+
+  opacity: .65;
+
+  font-size: 11px;
 }
+
+.nav-icon {
+  display: block;
+
+  font-size: 22px;
+
+  margin-bottom: 4px;
+}
+
+.floating {
+  position: fixed;
+
+  pointer-events: none;
+
+  color: #ffd43b;
+
+  font-size: 27px;
+
+  font-weight: 900;
+
+  text-shadow: 0 2px 8px rgba(0,0,0,.5);
+
+  animation: floatUp .7s ease-out forwards;
+
+  z-index: 100;
+}
+
+@keyframes floatUp {
+
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-90px) scale(1.2);
+    opacity: 0;
+  }
+
+}
+
 </style>
+
 </head>
 
 <body>
 
 <main class="app">
 
-<div class="logo">NOVA</div>
-<div class="subtitle">TAP TO EARN</div>
+  <div class="logo">
+    NOVA
+  </div>
 
-<div class="balance" id="balance">0</div>
-<div class="unit">NVA</div>
+  <div class="subtitle" id="welcome">
+    TAP TO EARN 🚀
+  </div>
 
-<div class="coin-area">
+  <div class="balance" id="balance">
+    0
+  </div>
 
-<div class="coin" id="coin">
-<div class="coin-inner">N</div>
-</div>
+  <div class="unit">
+    NVA
+  </div>
 
-<div class="tap-text">برای استخراج روی سکه بزن</div>
+  <div class="coin-area">
 
-</div>
+    <div class="coin" id="coin">
 
-<div class="energy">
+      <div class="coin-inner">
+        N
+      </div>
 
-<div class="energy-top">
-<span>⚡ انرژی</span>
-<span id="energyText">1000 / 1000</span>
-</div>
+    </div>
 
-<div class="energy-bar">
-<div class="energy-fill" id="energyFill"></div>
-</div>
+    <div class="tap-text">
+      👆 برای استخراج روی سکه بزن
+    </div>
 
-</div>
+  </div>
+
+  <div class="energy">
+
+    <div class="energy-top">
+
+      <span>
+        ⚡ انرژی
+      </span>
+
+      <span id="energyText">
+        1000 / 1000
+      </span>
+
+    </div>
+
+    <div class="energy-bar">
+
+      <div
+        class="energy-fill"
+        id="energyFill">
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="nova-info">
+
+    <h3>
+      🪙 به NovaCoin خوش آمدید!
+    </h3>
+
+    <p>
+      👆 با هر ضربه روی سکه، 1 Nova دریافت می‌کنید.
+    </p>
+
+    <p>
+      ⚡ هر ضربه یک واحد انرژی مصرف می‌کند و انرژی به مرور دوباره شارژ می‌شود.
+    </p>
+
+    <p>
+      🎁 مأموریت‌ها و پاداش‌های روزانه به‌زودی اضافه می‌شوند.
+    </p>
+
+    <p>
+      👥 با دعوت دوستانت می‌توانی پاداش بیشتری دریافت کنی.
+    </p>
+
+    <strong>
+      🚀 شروع کن، ضربه بزن و Nova جمع کن!
+    </strong>
+
+  </div>
 
 </main>
 
 <nav class="nav">
 
-<button class="nav-item">
-<span class="nav-icon">⛏️</span>
-استخراج
-</button>
+  <button class="nav-item">
+    <span class="nav-icon">⛏️</span>
+    استخراج
+  </button>
 
-<button class="nav-item">
-<span class="nav-icon">👥</span>
-دوستان
-</button>
+  <button class="nav-item">
+    <span class="nav-icon">👥</span>
+    دوستان
+  </button>
 
-<button class="nav-item">
-<span class="nav-icon">🎁</span>
-پاداش
-</button>
+  <button class="nav-item">
+    <span class="nav-icon">🎁</span>
+    پاداش
+  </button>
 
-<button class="nav-item">
-<span class="nav-icon">🏆</span>
-رتبه‌بندی
-</button>
+  <button class="nav-item">
+    <span class="nav-icon">🏆</span>
+    رتبه‌بندی
+  </button>
 
-<button class="nav-item">
-<span class="nav-icon">👤</span>
-پروفایل
-</button>
+  <button class="nav-item">
+    <span class="nav-icon">👤</span>
+    پروفایل
+  </button>
 
 </nav>
 
 <script>
+
 const tg = window.Telegram.WebApp;
 
 tg.ready();
 tg.expand();
 
+
+/* کاربر تلگرام */
+
 const user = tg.initDataUnsafe?.user;
 
 if (user) {
-  const subtitle = document.querySelector(".subtitle");
 
-  subtitle.textContent =
-    "سلام " + (user.first_name || "دوست") + " 👋";
+  const welcome =
+    document.getElementById("welcome");
+
+  welcome.textContent =
+    "سلام " +
+    (user.first_name || "دوست") +
+    " 👋";
+
 }
-let balance=Number(localStorage.getItem("nova_balance"))||0;
+
+
+/* موجودی */
+
+let balance =
+  Number(localStorage.getItem("nova_balance")) || 0;
+
+
+/* انرژی */
 
 let energy = 1000;
 
+const MAX_ENERGY = 1000;
 
-const MAX_ENERGY=1000;
 
-const balanceElement=document.getElementById("balance");
-const energyText=document.getElementById("energyText");
-const energyFill=document.getElementById("energyFill");
-const coin=document.getElementById("coin");
+/* عناصر صفحه */
 
-function updateScreen(){
+const balanceElement =
+  document.getElementById("balance");
 
-balanceElement.textContent=
-balance.toLocaleString("en-US");
+const energyText =
+  document.getElementById("energyText");
 
-energyText.textContent=
-energy+" / "+MAX_ENERGY;
+const energyFill =
+  document.getElementById("energyFill");
 
-energyFill.style.width=
-(energy/MAX_ENERGY*100)+"%";
+const coin =
+  document.getElementById("coin");
 
-localStorage.setItem(
-"nova_balance",
-balance
-);
 
-localStorage.setItem(
-"nova_energy",
-energy
-);
+/* بروزرسانی صفحه */
 
-}
+function updateScreen() {
 
-function createFloatingText(x,y){
+  balanceElement.textContent =
+    balance.toLocaleString("en-US");
 
-const element=document.createElement("div");
+  energyText.textContent =
+    energy +
+    " / " +
+    MAX_ENERGY;
 
-element.className="floating";
-element.textContent="+1";
+  energyFill.style.width =
+    (energy / MAX_ENERGY * 100) +
+    "%";
 
-element.style.left=(x-12)+"px";
-element.style.top=(y-20)+"px";
-
-document.body.appendChild(element);
-
-setTimeout(function(){
-element.remove();
-},700);
+  localStorage.setItem(
+    "nova_balance",
+    balance
+  );
 
 }
 
-/* هر لمس = یک عدد */
+
+/* نمایش +1 */
+
+function createFloatingText(x, y) {
+
+  const element =
+    document.createElement("div");
+
+  element.className =
+    "floating";
+
+  element.textContent =
+    "+1";
+
+  element.style.left =
+    (x - 12) + "px";
+
+  element.style.top =
+    (y - 20) + "px";
+
+  document.body.appendChild(
+    element
+  );
+
+  setTimeout(function() {
+
+    element.remove();
+
+  }, 700);
+
+}
+
+
+/* ثبت ضربه */
 
 function tapCoin(x, y) {
 
@@ -325,54 +525,63 @@ function tapCoin(x, y) {
   }
 
   balance += 1;
+
   energy -= 1;
 
   updateScreen();
 
-  createFloatingText(x, y);
+  createFloatingText(
+    x,
+    y
+  );
+
 }
 
-coin.addEventListener("touchend", function(event) {
 
-  event.preventDefault();
+/* لمس آیفون */
 
-  const touch = event.changedTouches[0];
+coin.addEventListener(
+  "touchend",
+  function(event) {
 
-  tapCoin(
-    touch.clientX,
-    touch.clientY
-  );
+    event.preventDefault();
 
-}, { passive: false });
+    const touch =
+      event.changedTouches[0];
 
+    tapCoin(
+      touch.clientX,
+      touch.clientY
+    );
 
-// کلیک
-coin.addEventListener("click", function(event) {
+  },
+  {
+    passive: false
+  }
+);
 
-  tapCoin(
-    event.clientX,
-    event.clientY
-  );
-
-});
 
 /* شارژ انرژی */
 
-setInterval(function(){
+setInterval(function() {
 
-if(energy<MAX_ENERGY){
+  if (energy < MAX_ENERGY) {
 
-energy=energy+1;
+    energy += 1;
 
-updateScreen();
+    updateScreen();
 
-}
+  }
 
-},3000);
+}, 3000);
+
+
+/* شروع */
 
 updateScreen();
 
 </script>
 
 </body>
+
 </html>
