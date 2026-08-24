@@ -1,33 +1,345 @@
-coin.addEventListener("pointerdown", function(event) {
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Nova</title>
 
-  if (energy <= 0) {
-    return;
-  }
+<style>
+*{
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+}
 
-  balance = balance + 1;
-  energy = energy - 1;
+body{
+margin:0;
+min-height:100vh;
+background:radial-gradient(circle at 50% 35%,#202a55,#0b1024 45%,#050711);
+color:white;
+font-family:Arial,sans-serif;
+overflow:hidden;
+user-select:none;
+}
 
-  balanceElement.textContent =
-    balance.toLocaleString("en-US");
+.app{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+padding:28px 18px 100px;
+}
 
-  energyText.textContent =
-    energy + " / " + MAX_ENERGY;
+.logo{
+font-size:28px;
+font-weight:900;
+letter-spacing:4px;
+}
 
-  energyFill.style.width =
-    ((energy / MAX_ENERGY) * 100) + "%";
+.subtitle{
+margin-top:5px;
+font-size:12px;
+opacity:.55;
+}
 
-  localStorage.setItem(
-    "nova_balance",
-    balance
-  );
+.balance{
+margin-top:18px;
+font-size:38px;
+font-weight:900;
+}
 
-  localStorage.setItem(
-    "nova_energy",
-    energy
-  );
+.unit{
+font-size:13px;
+opacity:.55;
+margin-top:3px;
+}
 
-  createFloatingText(
-    event.clientX,
-    event.clientY
-  );
+.coin-area{
+flex:1;
+width:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+}
+
+.coin{
+width:220px;
+height:220px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:radial-gradient(circle at 35% 25%,#fff8b0,#ffd83d 12%,#ffb300 45%,#c86b00);
+border:7px solid #ffd94d;
+box-shadow:0 0 25px rgba(255,190,30,.35),
+0 0 70px rgba(255,180,20,.18),
+inset 0 8px 15px rgba(255,255,255,.55),
+inset 0 -15px 20px rgba(100,40,0,.35);
+touch-action:manipulation;
+transition:transform .06s;
+}
+
+.coin:active{
+transform:scale(.90);
+}
+
+.coin-inner{
+width:165px;
+height:165px;
+border-radius:50%;
+border:4px solid rgba(255,255,255,.35);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:76px;
+font-weight:900;
+}
+
+.tap-text{
+position:absolute;
+bottom:20px;
+font-size:13px;
+opacity:.55;
+}
+
+.energy{
+width:100%;
+max-width:390px;
+margin-bottom:18px;
+}
+
+.energy-top{
+display:flex;
+justify-content:space-between;
+font-size:13px;
+margin-bottom:7px;
+opacity:.85;
+}
+
+.energy-bar{
+width:100%;
+height:9px;
+background:rgba(255,255,255,.1);
+border-radius:20px;
+overflow:hidden;
+}
+
+.energy-fill{
+height:100%;
+width:100%;
+background:#ffd43b;
+border-radius:20px;
+}
+
+.nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+height:78px;
+display:flex;
+justify-content:space-around;
+align-items:center;
+background:rgba(7,10,22,.94);
+border-top:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(12px);
+}
+
+.nav-item{
+border:0;
+background:transparent;
+color:white;
+opacity:.65;
+font-size:11px;
+}
+
+.nav-icon{
+display:block;
+font-size:22px;
+margin-bottom:4px;
+}
+
+.floating{
+position:fixed;
+pointer-events:none;
+color:#ffd43b;
+font-size:27px;
+font-weight:900;
+animation:floatUp .7s ease-out forwards;
+}
+
+@keyframes floatUp{
+0%{
+transform:translateY(0) scale(1);
+opacity:1;
+}
+100%{
+transform:translateY(-90px) scale(1.2);
+opacity:0;
+}
+}
+</style>
+</head>
+
+<body>
+
+<main class="app">
+
+<div class="logo">NOVA</div>
+<div class="subtitle">TAP TO EARN</div>
+
+<div class="balance" id="balance">0</div>
+<div class="unit">NVA</div>
+
+<div class="coin-area">
+
+<div class="coin" id="coin">
+<div class="coin-inner">N</div>
+</div>
+
+<div class="tap-text">برای استخراج روی سکه بزن</div>
+
+</div>
+
+<div class="energy">
+
+<div class="energy-top">
+<span>⚡ انرژی</span>
+<span id="energyText">1000 / 1000</span>
+</div>
+
+<div class="energy-bar">
+<div class="energy-fill" id="energyFill"></div>
+</div>
+
+</div>
+
+</main>
+
+<nav class="nav">
+
+<button class="nav-item">
+<span class="nav-icon">⛏️</span>
+استخراج
+</button>
+
+<button class="nav-item">
+<span class="nav-icon">👥</span>
+دوستان
+</button>
+
+<button class="nav-item">
+<span class="nav-icon">🎁</span>
+پاداش
+</button>
+
+<button class="nav-item">
+<span class="nav-icon">🏆</span>
+رتبه‌بندی
+</button>
+
+<button class="nav-item">
+<span class="nav-icon">👤</span>
+پروفایل
+</button>
+
+</nav>
+
+<script>
+
+let balance=Number(localStorage.getItem("nova_balance"))||0;
+
+let energy=Number(localStorage.getItem("nova_energy"));
+
+if(!Number.isFinite(energy)){
+energy=1000;
+}
+
+const MAX_ENERGY=1000;
+
+const balanceElement=document.getElementById("balance");
+const energyText=document.getElementById("energyText");
+const energyFill=document.getElementById("energyFill");
+const coin=document.getElementById("coin");
+
+function updateScreen(){
+
+balanceElement.textContent=
+balance.toLocaleString("en-US");
+
+energyText.textContent=
+energy+" / "+MAX_ENERGY;
+
+energyFill.style.width=
+(energy/MAX_ENERGY*100)+"%";
+
+localStorage.setItem(
+"nova_balance",
+balance
+);
+
+localStorage.setItem(
+"nova_energy",
+energy
+);
+
+}
+
+function createFloatingText(x,y){
+
+const element=document.createElement("div");
+
+element.className="floating";
+element.textContent="+1";
+
+element.style.left=(x-12)+"px";
+element.style.top=(y-20)+"px";
+
+document.body.appendChild(element);
+
+setTimeout(function(){
+element.remove();
+},700);
+
+}
+
+/* هر لمس = یک عدد */
+
+coin.addEventListener("pointerdown",function(event){
+
+if(energy<=0){
+return;
+}
+
+balance=balance+1;
+energy=energy-1;
+
+updateScreen();
+
+createFloatingText(
+event.clientX,
+event.clientY
+);
+
 });
+
+/* شارژ انرژی */
+
+setInterval(function(){
+
+if(energy<MAX_ENERGY){
+
+energy=energy+1;
+
+updateScreen();
+
+}
+
+},3000);
+
+updateScreen();
+
+</script>
+
+</body>
+</html>
