@@ -302,9 +302,7 @@ element.remove();
 
 /* هر لمس = یک عدد */
 
-coin.addEventListener("touchstart", function(event) {
-
-  event.preventDefault();
+function tapCoin(x, y) {
 
   if (energy <= 0) {
     return;
@@ -315,24 +313,30 @@ coin.addEventListener("touchstart", function(event) {
 
   updateScreen();
 
-  const touch = event.touches[0];
+  createFloatingText(x, y);
+}
 
-  createFloatingText(
+coin.addEventListener("touchend", function(event) {
+
+  event.preventDefault();
+
+  const touch = event.changedTouches[0];
+
+  tapCoin(
     touch.clientX,
     touch.clientY
   );
 
 }, { passive: false });
 
-balance=balance+1;
-energy=energy-1;
 
-updateScreen();
+// کلیک
+coin.addEventListener("click", function(event) {
 
-createFloatingText(
-event.clientX,
-event.clientY
-);
+  tapCoin(
+    event.clientX,
+    event.clientY
+  );
 
 });
 
