@@ -75,7 +75,7 @@ box-shadow:0 0 25px rgba(255,190,30,.35),
 0 0 70px rgba(255,180,20,.18),
 inset 0 8px 15px rgba(255,255,255,.55),
 inset 0 -15px 20px rgba(100,40,0,.35);
-touch-action:manipulation;
+touch-action:none;
 transition:transform .06s;
 }
 
@@ -305,11 +305,27 @@ element.remove();
 
 /* هر لمس = یک عدد */
 
-coin.addEventListener("pointerdown",function(event){
+coin.addEventListener("pointerdown", function(event) {
+  event.preventDefault();
 
-if(energy<=0){
-return;
-}
+  if (event.pointerType === "touch" && event.isPrimary === false) {
+    return;
+  }
+
+  if (energy <= 0) {
+    return;
+  }
+
+  balance += 1;
+  energy -= 1;
+
+  updateScreen();
+
+  createFloatingText(
+    event.clientX,
+    event.clientY
+  );
+});
 
 balance=balance+1;
 energy=energy-1;
