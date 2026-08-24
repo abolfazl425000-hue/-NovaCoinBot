@@ -250,7 +250,19 @@ opacity:0;
 </nav>
 
 <script>
+const tg = window.Telegram.WebApp;
 
+tg.ready();
+tg.expand();
+
+const user = tg.initDataUnsafe?.user;
+
+if (user) {
+  const subtitle = document.querySelector(".subtitle");
+
+  subtitle.textContent =
+    "سلام " + (user.first_name || "دوست") + " 👋";
+}
 let balance=Number(localStorage.getItem("nova_balance"))||0;
 
 let energy = 1000;
