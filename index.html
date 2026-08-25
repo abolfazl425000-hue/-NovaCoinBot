@@ -11,29 +11,6 @@
 
 <style>
 
-  .profile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-
-.profile-photo {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #ffd43b;
-  background: #222;
-}
-
-.profile-name {
-  font-size: 15px;
-  font-weight: 700;
-  color: white;
-}
-
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
@@ -50,7 +27,7 @@ body {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at 50% 30%, #202a55 0%, #0b1024 48%, #050711 100%);
+    radial-gradient(circle at 50% 20%, #202a55 0%, #0b1024 48%, #050711 100%);
   color: white;
   font-family: Arial, sans-serif;
   overflow-x: hidden;
@@ -59,27 +36,26 @@ body {
 
 .app {
   min-height: 100vh;
+  padding: 24px 16px 105px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px 16px 105px;
 }
 
 .logo {
-  font-size: 28px;
+  font-size: 29px;
   font-weight: 900;
-  letter-spacing: 4px;
+  letter-spacing: 5px;
 }
 
 .subtitle {
   margin-top: 5px;
   font-size: 13px;
   color: #ffd43b;
-  opacity: .9;
 }
 
 .balance {
-  margin-top: 16px;
+  margin-top: 15px;
   font-size: 38px;
   font-weight: 900;
 }
@@ -90,10 +66,22 @@ body {
   margin-top: 2px;
 }
 
-.coin-area {
-  flex: 1;
+.page {
   width: 100%;
-  min-height: 360px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page.active {
+  display: flex;
+}
+
+/* COIN */
+
+.coin-area {
+  width: 100%;
+  min-height: 350px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -132,7 +120,7 @@ body {
   transition: transform .06s;
 }
 
-.coin:active {
+.coin.pressed {
   transform: scale(.90);
 }
 
@@ -156,10 +144,12 @@ body {
 
 .tap-text {
   position: absolute;
-  bottom: 25px;
+  bottom: 15px;
   font-size: 13px;
   opacity: .55;
 }
+
+/* ENERGY */
 
 .energy {
   width: 100%;
@@ -191,82 +181,149 @@ body {
   transition: width .2s;
 }
 
-.nova-info {
+/* CARDS */
+
+.card {
   width: 100%;
   max-width: 390px;
-  margin: 5px auto 100px;
-  padding: 16px;
+  margin-top: 14px;
+  padding: 18px;
+
   background: rgba(255,255,255,.06);
   border: 1px solid rgba(255,255,255,.08);
-  border-radius: 18px;
+  border-radius: 20px;
+
   text-align: right;
-  font-size: 12px;
+}
+
+.card h2,
+.card h3 {
+  margin: 0 0 12px;
+  color: #ffd43b;
+}
+
+.card p {
+  margin: 8px 0;
   line-height: 1.8;
+  font-size: 13px;
   color: rgba(255,255,255,.82);
 }
 
-.nova-info h3 {
-  margin: 0 0 8px;
-
-  color: #ffd43b;
-
-  font-size: 15px;
+.big-number {
+  font-size: 30px;
+  font-weight: 900;
+  text-align: center;
+  margin: 10px 0;
 }
 
-.nova-info p {
-  margin: 5px 0;
-}
+/* BUTTONS */
 
-.nova-info strong {
-  display: block;
-
-  margin-top: 8px;
-
-  color: #ffd43b;
-
-  font-size: 13px;
-}
-
-.nav {
-  position: fixed;
-
-  bottom: 0;
-  left: 0;
-  right: 0;
-
-  height: 78px;
-
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-
-  background: rgba(7,10,22,.95);
-
-  border-top: 1px solid rgba(255,255,255,.08);
-
-  backdrop-filter: blur(12px);
-
-  z-index: 10;
-}
-
-.nav-item {
+.action-button {
+  width: 100%;
   border: 0;
-  background: transparent;
+  border-radius: 15px;
+  padding: 14px;
 
+  background: #ffd43b;
+  color: #111;
+
+  font-size: 14px;
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+.action-button:active {
+  transform: scale(.97);
+}
+
+.secondary-button {
+  margin-top: 10px;
+  background: rgba(255,255,255,.10);
   color: white;
+}
 
-  opacity: .65;
+/* REFERRAL */
+
+.referral-box {
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(0,0,0,.22);
+  border-radius: 12px;
+
+  direction: ltr;
+  text-align: center;
 
   font-size: 11px;
+  word-break: break-all;
+  color: rgba(255,255,255,.75);
 }
 
-.nav-icon {
-  display: block;
+/* RANKING */
 
-  font-size: 22px;
+.rank-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  margin-bottom: 4px;
+  padding: 12px 4px;
+
+  border-bottom: 1px solid rgba(255,255,255,.07);
 }
+
+.rank-row:last-child {
+  border-bottom: 0;
+}
+
+.rank-number {
+  width: 35px;
+  font-weight: 900;
+  color: #ffd43b;
+}
+
+.rank-name {
+  flex: 1;
+  text-align: right;
+}
+
+.rank-score {
+  font-weight: 900;
+}
+
+/* PROFILE */
+
+.profile-box {
+  text-align: center;
+}
+
+.profile-icon {
+  width: 70px;
+  height: 70px;
+
+  margin: 5px auto 12px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(145deg,#ffd43b,#c86b00);
+
+  color: white;
+  font-size: 30px;
+  font-weight: 900;
+}
+
+/* INFO */
+
+.info {
+  line-height: 1.9;
+  font-size: 12px;
+  color: rgba(255,255,255,.78);
+}
+
+/* FLOATING +1 */
 
 .floating {
   position: fixed;
@@ -300,6 +357,60 @@ body {
 
 }
 
+/* NAV */
+
+.nav {
+  position: fixed;
+
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  height: 78px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  background: rgba(7,10,22,.96);
+
+  border-top: 1px solid rgba(255,255,255,.08);
+
+  backdrop-filter: blur(12px);
+
+  z-index: 100;
+}
+
+.nav-item {
+  border: 0;
+  background: transparent;
+
+  color: white;
+
+  opacity: .55;
+
+  font-size: 10px;
+
+  cursor: pointer;
+}
+
+.nav-item.active {
+  opacity: 1;
+  color: #ffd43b;
+}
+
+.nav-icon {
+  display: block;
+
+  font-size: 22px;
+
+  margin-bottom: 4px;
+}
+
+.hidden {
+  display: none !important;
+}
+
 </style>
 
 </head>
@@ -308,160 +419,367 @@ body {
 
 <main class="app">
 
-  <div class="logo">
-    NOVA
-  </div>
+  <!-- استخراج -->
 
-  <div class="subtitle" id="welcome">
-    TAP TO EARN 🚀
-  </div>
+  <section class="page active" id="miningPage">
 
-  <div class="balance" id="balance">
-    0
-  </div>
+    <div class="logo">
+      NOVA
+    </div>
 
-  <div class="unit">
-    NVA
-  </div>
+    <div class="subtitle" id="welcome">
+      TAP TO EARN 🚀
+    </div>
 
-  <div class="coin-area">
+    <div class="balance" id="balance">
+      0
+    </div>
 
-    <div class="coin" id="coin">
+    <div class="unit">
+      NVA
+    </div>
 
-      <div class="coin-inner">
+    <div class="coin-area">
+
+      <div class="coin" id="coin">
+
+        <div class="coin-inner">
+          N
+        </div>
+
+      </div>
+
+      <div class="tap-text">
+        👆 برای استخراج روی سکه بزن
+      </div>
+
+    </div>
+
+    <div class="energy">
+
+      <div class="energy-top">
+
+        <span>
+          ⚡ انرژی
+        </span>
+
+        <span id="energyText">
+          1000 / 1000
+        </span>
+
+      </div>
+
+      <div class="energy-bar">
+
+        <div
+          class="energy-fill"
+          id="energyFill">
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="card info">
+
+      <h3>
+        🪙 به NovaCoin خوش آمدید!
+      </h3>
+
+      <p>
+        👆 با هر ضربه روی سکه، 1 Nova دریافت می‌کنید.
+      </p>
+
+      <p>
+        ⚡ هر ضربه یک واحد انرژی مصرف می‌کند.
+      </p>
+
+      <p>
+        🎁 پاداش روزانه و مأموریت‌ها در Nova فعال هستند.
+      </p>
+
+      <p>
+        👥 دوستان خود را دعوت کنید و پاداش بگیرید.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- دوستان -->
+
+  <section class="page" id="friendsPage">
+
+    <div class="logo">
+      👥 دوستان
+    </div>
+
+    <div class="card">
+
+      <h3>
+        دوستان خود را دعوت کن
+      </h3>
+
+      <p>
+        با دعوت دوستانت می‌توانی Nova بیشتری دریافت کنی.
+      </p>
+
+      <div class="big-number" id="refCount">
+        0
+      </div>
+
+      <p style="text-align:center;">
+        تعداد دعوت‌شده‌ها
+      </p>
+
+      <div class="referral-box" id="referralLink">
+        در حال ساخت لینک...
+      </div>
+
+      <button
+        class="action-button"
+        id="copyReferral">
+        📋 کپی لینک دعوت
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- پاداش -->
+
+  <section class="page" id="rewardPage">
+
+    <div class="logo">
+      🎁 پاداش
+    </div>
+
+    <div class="card">
+
+      <h3>
+        پاداش روزانه
+      </h3>
+
+      <p>
+        هر روز یک بار وارد شو و پاداش خودت را دریافت کن.
+      </p>
+
+      <div class="big-number">
+        +100 NVA
+      </div>
+
+      <button
+        class="action-button"
+        id="dailyReward">
+        🎁 دریافت پاداش
+      </button>
+
+      <p
+        id="rewardStatus"
+        style="text-align:center;">
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- رتبه بندی -->
+
+  <section class="page" id="rankingPage">
+
+    <div class="logo">
+      🏆 رتبه‌بندی
+    </div>
+
+    <div class="card">
+
+      <h3>
+        برترین کاربران
+      </h3>
+
+      <div id="rankingList">
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- پروفایل -->
+
+  <section class="page" id="profilePage">
+
+    <div class="logo">
+      👤 پروفایل
+    </div>
+
+    <div class="card profile-box">
+
+      <div class="profile-icon">
         N
       </div>
 
-    </div>
+      <h3 id="profileName">
+        کاربر Nova
+      </h3>
 
-    <div class="tap-text">
-      👆 برای استخراج روی سکه بزن
-    </div>
+      <p>
+        شناسه کاربر:
+      </p>
 
-  </div>
+      <p id="profileId">
+        -
+      </p>
 
-  <div class="energy">
+      <p>
+        موجودی:
+      </p>
 
-    <div class="energy-top">
-
-      <span>
-        ⚡ انرژی
-      </span>
-
-      <span id="energyText">
-        1000 / 1000
-      </span>
-
-    </div>
-
-    <div class="energy-bar">
-
-      <div
-        class="energy-fill"
-        id="energyFill">
+      <div class="big-number" id="profileBalance">
+        0 NVA
       </div>
 
     </div>
 
-  </div>
-
-  <div class="nova-info">
-
-    <h3>
-      🪙 به NovaCoin خوش آمدید!
-    </h3>
-
-    <p>
-      👆 با هر ضربه روی سکه، 1 Nova دریافت می‌کنید.
-    </p>
-
-    <p>
-      ⚡ هر ضربه یک واحد انرژی مصرف می‌کند و انرژی به مرور دوباره شارژ می‌شود.
-    </p>
-
-    <p>
-      🎁 مأموریت‌ها و پاداش‌های روزانه به‌زودی اضافه می‌شوند.
-    </p>
-
-    <p>
-      👥 با دعوت دوستانت می‌توانی پاداش بیشتری دریافت کنی.
-    </p>
-
-    <strong>
-      🚀 شروع کن، ضربه بزن و Nova جمع کن!
-    </strong>
-
-  </div>
+  </section>
 
 </main>
 
+
+<!-- منوی پایین -->
+
 <nav class="nav">
 
-  <button class="nav-item">
-    <span class="nav-icon">⛏️</span>
+  <button
+    class="nav-item active"
+    data-page="miningPage">
+
+    <span class="nav-icon">
+      ⛏️
+    </span>
+
     استخراج
+
   </button>
 
-  <button class="nav-item">
-    <span class="nav-icon">👥</span>
+
+  <button
+    class="nav-item"
+    data-page="friendsPage">
+
+    <span class="nav-icon">
+      👥
+    </span>
+
     دوستان
+
   </button>
 
-  <button class="nav-item">
-    <span class="nav-icon">🎁</span>
+
+  <button
+    class="nav-item"
+    data-page="rewardPage">
+
+    <span class="nav-icon">
+      🎁
+    </span>
+
     پاداش
+
   </button>
 
-  <button class="nav-item">
-    <span class="nav-icon">🏆</span>
+
+  <button
+    class="nav-item"
+    data-page="rankingPage">
+
+    <span class="nav-icon">
+      🏆
+    </span>
+
     رتبه‌بندی
+
   </button>
 
-  <button class="nav-item">
-    <span class="nav-icon">👤</span>
+
+  <button
+    class="nav-item"
+    data-page="profilePage">
+
+    <span class="nav-icon">
+      👤
+    </span>
+
     پروفایل
+
   </button>
 
 </nav>
 
+
 <script>
 
-const tg = window.Telegram.WebApp;
+/* Telegram */
+
+const tg =
+  window.Telegram.WebApp;
 
 tg.ready();
 tg.expand();
 
-/* کاربر تلگرام */
 
-const user = tg.initDataUnsafe?.user;
-  
-if (user) {  
+/* کاربر */
 
-  const welcome =
-    document.getElementById("welcome");
+const user =
+  tg.initDataUnsafe?.user;
 
-  welcome.textContent =
-    "سلام " +
-    (user.first_name || "دوست") +
-    " 👋";
+const userName =
+  user?.first_name || "دوست";
 
-}
+const userId =
+  user?.id || "guest";
+
+
+/* خوش آمد */
+
+const welcome =
+  document.getElementById("welcome");
+
+welcome.textContent =
+  "سلام " + userName + " 👋";
 
 
 /* موجودی */
 
 let balance =
-  Number(localStorage.getItem("nova_balance")) || 0;
+  Number(
+    localStorage.getItem("nova_balance")
+  ) || 0;
 
 
 /* انرژی */
 
-let energy = 1000;
-
 const MAX_ENERGY = 1000;
 
+let energy =
+  Number(
+    localStorage.getItem("nova_energy")
+  );
 
-/* عناصر صفحه */
+if (
+  !Number.isFinite(energy) ||
+  energy < 0 ||
+  energy > MAX_ENERGY
+) {
+  energy = MAX_ENERGY;
+}
+
+
+/* عناصر */
 
 const balanceElement =
   document.getElementById("balance");
@@ -476,7 +794,7 @@ const coin =
   document.getElementById("coin");
 
 
-/* بروزرسانی صفحه */
+/* بروزرسانی */
 
 function updateScreen() {
 
@@ -492,15 +810,26 @@ function updateScreen() {
     (energy / MAX_ENERGY * 100) +
     "%";
 
+  document.getElementById(
+    "profileBalance"
+  ).textContent =
+    balance.toLocaleString("en-US") +
+    " NVA";
+
   localStorage.setItem(
     "nova_balance",
     balance
   );
 
+  localStorage.setItem(
+    "nova_energy",
+    energy
+  );
+
 }
 
 
-/* نمایش +1 */
+/* +1 */
 
 function createFloatingText(x, y) {
 
@@ -523,21 +852,26 @@ function createFloatingText(x, y) {
     element
   );
 
-  setTimeout(function() {
-
-    element.remove();
-
-  }, 700);
+  setTimeout(
+    () => element.remove(),
+    700
+  );
 
 }
 
 
-/* ثبت ضربه */
+/* استخراج */
 
 function tapCoin(x, y) {
 
   if (energy <= 0) {
+
+    tg.HapticFeedback?.notificationOccurred(
+      "error"
+    );
+
     return;
+
   }
 
   balance += 1;
@@ -551,23 +885,31 @@ function tapCoin(x, y) {
     y
   );
 
+  tg.HapticFeedback?.impactOccurred(
+    "light"
+  );
+
 }
 
 
-/* لمس آیفون */
+/*
+  سیستم لمس واحد
+  برای آیفون و اندروید
+*/
 
 coin.addEventListener(
-  "touchend",
+  "pointerdown",
   function(event) {
 
     event.preventDefault();
 
-    const touch =
-      event.changedTouches[0];
-
     tapCoin(
-      touch.clientX,
-      touch.clientY
+      event.clientX,
+      event.clientY
+    );
+
+    coin.classList.add(
+      "pressed"
     );
 
   },
@@ -577,24 +919,418 @@ coin.addEventListener(
 );
 
 
+coin.addEventListener(
+  "pointerup",
+  function() {
+
+    coin.classList.remove(
+      "pressed"
+    );
+
+  }
+);
+
+
+coin.addEventListener(
+  "pointercancel",
+  function() {
+
+    coin.classList.remove(
+      "pressed"
+    );
+
+  }
+);
+
+
 /* شارژ انرژی */
 
-setInterval(function() {
+setInterval(
+  function() {
 
-  if (energy < MAX_ENERGY) {
+    if (
+      energy < MAX_ENERGY
+    ) {
 
-    energy += 1;
+      energy += 1;
 
-    updateScreen();
+      updateScreen();
+
+    }
+
+  },
+  3000
+);
+
+
+/* منوی پایین */
+
+const navItems =
+  document.querySelectorAll(
+    ".nav-item"
+  );
+
+const pages =
+  document.querySelectorAll(
+    ".page"
+  );
+
+
+navItems.forEach(
+  function(button) {
+
+    button.addEventListener(
+      "click",
+      function() {
+
+        const pageId =
+          button.dataset.page;
+
+        pages.forEach(
+          function(page) {
+
+            page.classList.remove(
+              "active"
+            );
+
+          }
+        );
+
+        navItems.forEach(
+          function(item) {
+
+            item.classList.remove(
+              "active"
+            );
+
+          }
+        );
+
+        document
+          .getElementById(pageId)
+          .classList.add("active");
+
+        button.classList.add(
+          "active"
+        );
+
+        window.scrollTo(
+          0,
+          0
+        );
+
+        if (
+          pageId ===
+          "rankingPage"
+        ) {
+
+          updateRanking();
+
+        }
+
+      }
+    );
+
+  }
+);
+
+
+/* پروفایل */
+
+document.getElementById(
+  "profileName"
+).textContent =
+  userName;
+
+document.getElementById(
+  "profileId"
+).textContent =
+  userId;
+
+
+/* Referral */
+
+const BOT_USERNAME =
+  "NovaCoinBot";
+
+const referralLink =
+  "https://t.me/" +
+  BOT_USERNAME +
+  "?start=ref_" +
+  userId;
+
+
+document.getElementById(
+  "referralLink"
+).textContent =
+  referralLink;
+
+
+document.getElementById(
+  "copyReferral"
+).addEventListener(
+  "click",
+  async function() {
+
+    try {
+
+      await navigator.clipboard.writeText(
+        referralLink
+      );
+
+      this.textContent =
+        "✅ لینک کپی شد";
+
+      setTimeout(
+        () => {
+          this.textContent =
+            "📋 کپی لینک دعوت";
+        },
+        1500
+      );
+
+    } catch (error) {
+
+      tg.showAlert?.(
+        referralLink
+      );
+
+    }
+
+  }
+);
+
+
+/* تعداد دعوت */
+
+let refCount =
+  Number(
+    localStorage.getItem(
+      "nova_ref_count"
+    )
+  ) || 0;
+
+document.getElementById(
+  "refCount"
+).textContent =
+  refCount;
+
+
+/* پاداش روزانه */
+
+const rewardButton =
+  document.getElementById(
+    "dailyReward"
+  );
+
+const rewardStatus =
+  document.getElementById(
+    "rewardStatus"
+  );
+
+
+function checkDailyReward() {
+
+  const lastReward =
+    Number(
+      localStorage.getItem(
+        "nova_last_reward"
+      )
+    ) || 0;
+
+  const now =
+    Date.now();
+
+  const oneDay =
+    24 * 60 * 60 * 1000;
+
+  if (
+    now - lastReward <
+    oneDay
+  ) {
+
+    rewardButton.disabled =
+      true;
+
+    rewardButton.style.opacity =
+      ".5";
+
+    rewardStatus.textContent =
+      "⏳ پاداش امروز را دریافت کرده‌ای.";
 
   }
 
-}, 3000);
+}
+
+
+rewardButton.addEventListener(
+  "click",
+  function() {
+
+    const lastReward =
+      Number(
+        localStorage.getItem(
+          "nova_last_reward"
+        )
+      ) || 0;
+
+    const now =
+      Date.now();
+
+    const oneDay =
+      24 * 60 * 60 * 1000;
+
+    if (
+      now - lastReward <
+      oneDay
+    ) {
+
+      return;
+
+    }
+
+    balance += 100;
+
+    localStorage.setItem(
+      "nova_last_reward",
+      now
+    );
+
+    updateScreen();
+
+    rewardButton.disabled =
+      true;
+
+    rewardButton.style.opacity =
+      ".5";
+
+    rewardStatus.textContent =
+      "🎉 100 NVA دریافت کردی!";
+
+  }
+);
+
+
+/* رتبه بندی */
+
+function updateRanking() {
+
+  const list =
+    document.getElementById(
+      "rankingList"
+    );
+
+  const savedRanking =
+    JSON.parse(
+      localStorage.getItem(
+        "nova_ranking"
+      ) || "[]"
+    );
+
+  let ranking =
+    savedRanking.filter(
+      item =>
+        item &&
+        item.id !== userId
+    );
+
+  ranking.push({
+    id: userId,
+    name: userName,
+    balance: balance
+  });
+
+  ranking.sort(
+    (a, b) =>
+      b.balance - a.balance
+  );
+
+  ranking =
+    ranking.slice(0, 10);
+
+  list.innerHTML = "";
+
+  ranking.forEach(
+    function(item, index) {
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+      row.className =
+        "rank-row";
+
+      row.innerHTML =
+        `
+        <span class="rank-number">
+          ${index + 1}
+        </span>
+
+        <span class="rank-name">
+          ${item.name}
+        </span>
+
+        <span class="rank-score">
+          ${Number(item.balance).toLocaleString("en-US")}
+          NVA
+        </span>
+        `;
+
+      list.appendChild(row);
+
+    }
+  );
+
+}
+
+
+/* ذخیره رتبه محلی */
+
+function saveRanking() {
+
+  let ranking =
+    JSON.parse(
+      localStorage.getItem(
+        "nova_ranking"
+      ) || "[]"
+    );
+
+  ranking =
+    ranking.filter(
+      item =>
+        item.id !== userId
+    );
+
+  ranking.push({
+    id: userId,
+    name: userName,
+    balance: balance
+  });
+
+  localStorage.setItem(
+    "nova_ranking",
+    JSON.stringify(ranking)
+  );
+
+}
+
+
+/* ذخیره دوره‌ای */
+
+setInterval(
+  saveRanking,
+  5000
+);
 
 
 /* شروع */
 
+checkDailyReward();
+
 updateScreen();
+
+saveRanking();
 
 </script>
 
