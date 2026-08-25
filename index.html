@@ -438,7 +438,11 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-  if (user) {
+/* کاربر تلگرام */
+
+const user = tg.initDataUnsafe?.user;
+
+if (user) {
 
   const profileName =
     document.getElementById("profileName");
@@ -455,14 +459,7 @@ tg.expand();
     profilePhoto.style.display = "none";
   }
 
-}
-
-
-/* کاربر تلگرام */
-
-const user = tg.initDataUnsafe?.user;
-
-if (user) {
+} 
 
   const welcome =
     document.getElementById("welcome");
