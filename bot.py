@@ -1,78 +1,54 @@
 import os
+
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
-
-TOKEN = os.environ["BOT_TOKEN"]
+from telegram.ext import Application, CommandHandler, ContextTypes
 
 
-def menu():
-    return InlineKeyboardMarkup([
-        [
-            InlineKeyboardButton("⛏ Mine NVA", callback_data="mine"),
-            InlineKeyboardButton("👤 Profile", callback_data="profile")
-        ],
-        [
-            InlineKeyboardButton("🎁 Daily", callback_data="daily"),
-            InlineKeyboardButton("👥 Referral", callback_data="referral")
-        ],
-        [
-            InlineKeyboardButton("🏆 Ranking", callback_data="ranking")
-        ]
-    ])
+TOKEN = os.getenv("BOT_TOKEN")
+
+WEB_APP_URL = "https://abolfazl425000-hue.github.io/-NovaCoinBot/"
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    text = """🪙 به NovaCoin خوش آمدید!
+
+👆 با هر ضربه روی سکه، 1 Nova دریافت کنید.
+
+⚡ انرژی خود را مدیریت کنید.
+🎁 مأموریت‌ها و پاداش‌های روزانه در راه هستند.
+👥 دوستانتان را دعوت کنید و پاداش بیشتری بگیرید.
+🏆 برای رسیدن به رتبه‌های بالاتر تلاش کنید.
+
+🚀 همین حالا وارد Nova شوید و استخراج را شروع کنید!"""
+
+    keyboard = [
+        [
+            InlineKeyboardButton(
+                "🚀 Play Nova",
+                web_app={"url": WEB_APP_URL}
+            )
+        ]
+    ]
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
     await update.message.reply_text(
-        "🚀 Welcome to Nova!\n\n"
-        "🪙 Token: NVA\n\n"
-        "Choose an option:",
-        reply_markup=menu()
+        text,
+        reply_markup=reply_markup
     )
 
 
-async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    query = update.callback_query
-    await query.answer()
-
-    if query.data == "mine":
-        await query.message.reply_text(
-            "⛏ Mining successful!\n\n"
-            "+10 NVA"
-        )
-
-    elif query.data == "profile":
-        await query.message.reply_text(
-            f"👤 Profile\n\n"
-            f"User ID: {query.from_user.id}"
-        )
-
-    elif query.data == "daily":
-        await query.message.reply_text(
-            "🎁 Daily reward!\n\n"
-            "+50 NVA"
-        )
-
-    elif query.data == "referral":
-        bot = await context.bot.get_me()
-        link = f"https://t.me/{bot.username}?start={query.from_user.id}"
-
-        await query.message.reply_text(
-            "👥 Your referral link:\n\n"
-            f"{link}"
-        )
-
-    elif query.data == "ranking":
-        await query.message.reply_text(
-            "🏆 Nova Ranking\n\n"
-            "1. Coming soon..."
-        )
-
-
 def main():
+
+    if not TOKEN:
+        raise RuntimeError("BOT_TOKEN تنظیم نشده است")
+
     app = Application.builder().token(TOKEN).build()
 
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(CallbackQueryHandler(button))
+    app.add_handler(
+        CommandHandler("start", start)
+    )
 
     print("NovaCoinBot is running...")
 
