@@ -22,7 +22,7 @@ jobs:
       - name: Install Telegram library
         run: |
           python -m pip install --upgrade pip
-          pip install python-telegram-bot==22.5
+          pip install python-telegram-bot==22.5 supabase
 
       - name: Start NovaCoinBot
         env:
