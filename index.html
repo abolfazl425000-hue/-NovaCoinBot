@@ -312,13 +312,6 @@ body {
     NOVA
   </div>
 
-  <div class="profile">
-  <img id="profilePhoto" class="profile-photo" src="" alt="">
-  <div id="profileName" class="profile-name">
-    کاربر Nova
-  </div>
-</div>
-
   <div class="subtitle" id="welcome">
     TAP TO EARN 🚀
   </div>
@@ -441,25 +434,8 @@ tg.expand();
 /* کاربر تلگرام */
 
 const user = tg.initDataUnsafe?.user;
-
-if (user) {
-
-  const profileName =
-    document.getElementById("profileName");
-
-  const profilePhoto =
-    document.getElementById("profilePhoto");
-
-  profileName.textContent =
-    user.first_name || "کاربر Nova";
-
-  if (user.photo_url) {
-    profilePhoto.src = user.photo_url;
-  } else {
-    profilePhoto.style.display = "none";
-  }
-
-} 
+  
+if (user) {  
 
   const welcome =
     document.getElementById("welcome");
