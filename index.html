@@ -11,6 +11,29 @@
 
 <style>
 
+  .profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.profile-photo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffd43b;
+  background: #222;
+}
+
+.profile-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+}
+
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
@@ -289,6 +312,13 @@ body {
     NOVA
   </div>
 
+  <div class="profile">
+  <img id="profilePhoto" class="profile-photo" src="" alt="">
+  <div id="profileName" class="profile-name">
+    کاربر Nova
+  </div>
+</div>
+
   <div class="subtitle" id="welcome">
     TAP TO EARN 🚀
   </div>
@@ -407,6 +437,25 @@ const tg = window.Telegram.WebApp;
 
 tg.ready();
 tg.expand();
+
+  if (user) {
+
+  const profileName =
+    document.getElementById("profileName");
+
+  const profilePhoto =
+    document.getElementById("profilePhoto");
+
+  profileName.textContent =
+    user.first_name || "کاربر Nova";
+
+  if (user.photo_url) {
+    profilePhoto.src = user.photo_url;
+  } else {
+    profilePhoto.style.display = "none";
+  }
+
+}
 
 
 /* کاربر تلگرام */
